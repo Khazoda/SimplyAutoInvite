@@ -5,18 +5,17 @@
 <p>Automatically invite your friends to your party through guild chat. This add-on is perfect for guilds that run raids of organise RP events, saving you time and hassle. To learn how to use this add-on, please keep reading, or type **/sai** in-game for a quick guide. &nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-
-
-| d                                                                                                                                                             | d                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <p><br /><img style="float: left;" src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/headshot.png?raw=true" width="275" align="left" /></p> |
-| <p>&nbsp;</p>                                                                                                                                                 | <p style="text-align: left;" align="right"><span style="font-size: 18px;"><ins>Create invite keyword</ins></span></p><p style="text-align: left;" align="right"><span style="color: #008000; font-size: 18px;">/sai add [keyword]</span></p><p style="text-align: left;" align="right">&nbsp;</p><p style="text-align: left;" align="right"><span style="font-size: 18px;">For example, '/sai add 123' would add 123 as a keyword. Whenever someone in your guild types '123' in the guild chat, your client will automatically send them a group invite.</span></p> |
+<p><br /> <img style="float: left;" src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/headshot.png?raw=true" width="275" align="left" /></p>
+<p>&nbsp;</p>
+<p style="text-align: left;" align="right"><span style="font-size: 18px;"><ins>Create invite keyword</ins></span></p>
+<p style="text-align: left;" align="right"><span style="color: #008000; font-size: 18px;">/sai add [keyword]</span></p>
+<p style="text-align: left;" align="right">&nbsp;</p>
+<p style="text-align: left;" align="right"><span style="font-size: 18px;">For example, '/sai add 123' would add 123 as a keyword. Whenever someone in your guild types '123' in the guild chat, your client will automatically send them a group invite. </span></p>
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;"><span style="font-size: 18px;"><ins>Remove invite keyword</ins> </span></p>
 <p style="text-align: left;"><span style="color: #ff5454; font-size: 18px;">/sai remove [keyword] </span></p>
 <p style="text-align: left;">&nbsp;</p>
-<p style="text-align: left;"><span style="font-size: 18px;">For example, '/sai remove 123' would remove 123 from your list of active keywords. Now if someone types '123' in guild chat, you will no longer automatically send them a group invitation. </span></p>|
-
+<p style="text-align: left;"><span style="font-size: 18px;">For example, '/sai remove 123' would remove 123 from your list of active keywords. Now if someone types '123' in guild chat, you will no longer automatically send them a group invitation. </span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
