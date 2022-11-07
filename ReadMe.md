@@ -1,3 +1,4 @@
+
 <h2 style="text-align: center">
 <img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/Logo.png?raw=true" width="150"/>
 <br/>
@@ -9,24 +10,24 @@
 </p>
 
 <p style="display: flex; justify-content: center; text-align: left">&nbsp;</p>
-<p style="display: flex; justify-content: center; text-align: left">&nbsp;</p>
-<p>
-    <span style="font-size: 18px">Bring Dwayne "The Block" Johnson into your home with these simple
-        recipes:</span>
-</p>
-<p>
-    <span style="font-size: 18px"><img
-            src="https://www.dropbox.com/s/dnliwvx635b5nkq/Dwayne_The_Item_Johnson_Recipe.png?dl=1"
-            alt='Dwayne "The Item" Johnson' width="608" height="273" /></span><span style="font-size: 18px"><img
-            src="https://www.dropbox.com/s/x3aneytwhhnfwk1/Dwayne_The_Block_Johnson_Recipe.png?dl=1"
-            alt='Dwayne "The Block" Johnson Recipe' width="608" height="273" /></span>
-</p>
-<p>&nbsp;</p>
-<p>
-    <span style="font-size: 18px">Slab and Stair variants are crafted using multiple Dwayne "The Block"
-        Johnsons in their respective recipe patterns.<br /></span>
-</p>
-<p>&nbsp;</p>
-<p><span style="text-decoration: underline; font-size: 18px">Credits</span></p>
-<p>Tetracube (4dcube) ▶ Created the original mod for 1.16.4</p>
-<p>Dwayne "The Rock" Johnson&nbsp;▶ Graced us with his presence</p>
+
+## The text above for screen readers ⇙
+Automatically invite your friends to your party through guild chat.
+This add-on is perfect for guilds that run raids of organise RP events, saving you time and hassle.
+To learn how to use this add-on, please keep reading, or type **/sai** in-game for a quick guide.
+
+
+
+
+
+
+
+
+
+After executing that command, when someone types the {keyword} in guild chat, they are automatically invited to your group.
+
+The addon also removes any [Name] prefix that may be in your message from addons like Identity-2
+Feel free to ask questions.
+
+
+Lots of love xoxo
