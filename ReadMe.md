@@ -5,7 +5,7 @@
 <p>Automatically invite your friends to your party through guild chat. This add-on is perfect for guilds that run raids of organise RP events, saving you time and hassle. To learn how to use this add-on, please keep reading, or type **/sai** in-game for a quick guide. &nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p><br /> <img style="float: left;" src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/headshot.png?raw=true" width="275" align="left" /></p>
+<p><br /> <img style="float: left;" src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/instructions_headshot.png?raw=true" width="275" align="left" /></p>
 <p>&nbsp;</p>
 <p style="text-align: left;" align="right"><span style="font-size: 18px;"><ins>Create invite keyword</ins></span></p>
 <p style="text-align: left;" align="right"><span style="color: #008000; font-size: 18px;">/sai add [keyword]</span></p>
