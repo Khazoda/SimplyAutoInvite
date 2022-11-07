@@ -3,10 +3,11 @@
 <br/>
     <span style="font-family: impact, sans-serif; font-size: 36px">Simply Auto Invite</span>
 </h2>
-
 <p style="text-align: center; display: flex; justify-content: center">
-    <img src="https://www.dropbox.com/s/i5lcyxx0a3ek2f9/Splash%20Art.png?dl=1" alt="Dwayne House" width="1146" />
+
+<img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/Squirrel.png?raw=true" width="1146"/>
 </p>
+
 <p style="display: flex; justify-content: center; text-align: left">&nbsp;</p>
 <p style="display: flex; justify-content: center; text-align: left">&nbsp;</p>
 <p>

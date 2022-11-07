@@ -1,4 +1,4 @@
-IOWDB= { -- the defaults
+saiDB= { -- the defaults
 	ginv = {
         ginv = true,
         guildinv = true,
@@ -14,7 +14,7 @@ IOWDB= { -- the defaults
     triggerOutgoingInv = false,
 }
 local nameAndVersion = "SimplyAutoInvite "..GetAddOnMetadata("SimplyAutoInvite", "Version")
-local IOWmsgPrefix = "<SimplyAutoInvite> "
+local saimsgPrefix = "<SimplyAutoInvite> "
 
 local GuildInvite = GuildInvite
 local InviteUnit = C_PartyInfo.InviteUnit
@@ -25,9 +25,9 @@ local trim = trim
 local strlower = strlower
 local tinsert = tinsert
 local _M = {}
-IOWFunctions = _M
+saiFunctions = _M
 
-local IOW = CreateFrame("Frame", "SimplyAutoInvite")
+local sai = CreateFrame("Frame", "SimplyAutoInvite")
 
 local function OnEvent(self, event, ...)
 	local dispatch = self[event]
@@ -37,44 +37,44 @@ local function OnEvent(self, event, ...)
 	end
 end
 
-IOW:SetScript("OnEvent", OnEvent)
-IOW:RegisterEvent("ADDON_LOADED")
--- IOW:RegisterEvent("CHAT_MSG_BN_WHISPER")
--- IOW:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM")
--- IOW:RegisterEvent("CHAT_MSG_WHISPER")
--- IOW:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
-IOW:RegisterEvent("CHAT_MSG_GUILD")
+sai:SetScript("OnEvent", OnEvent)
+sai:RegisterEvent("ADDON_LOADED")
+-- sai:RegisterEvent("CHAT_MSG_BN_WHISPER")
+-- sai:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM")
+-- sai:RegisterEvent("CHAT_MSG_WHISPER")
+-- sai:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
+sai:RegisterEvent("CHAT_MSG_GUILD")
 
-function IOW:ADDON_LOADED(addonName)
-    print("Loaded " .. nameAndVersion .. "; type '/iow info', for more info")
+function sai:ADDON_LOADED(addonName)
+    print("Loaded " .. nameAndVersion .. "; type '/sai info', for more info")
     
-    if IOWDB.ginv == nil then
-        IOWDB.ginv = {
+    if saiDB.ginv == nil then
+        saiDB.ginv = {
             ginv = true,
             guildinv = true,
             ginvite = true
         }
     end
-    if IOWDB.inv == nil then
-        IOWDB.inv = {
+    if saiDB.inv == nil then
+        saiDB.inv = {
             inv = true,
             invite = true
         }
     end
-    if IOWDB.confirm == nil then
-        IOWDB.confirm = true
+    if saiDB.confirm == nil then
+        saiDB.confirm = true
     end
-    if IOWDB.keywordMatchMiddle == nil then
-        IOWDB.keywordMatchMiddle = true
+    if saiDB.keywordMatchMiddle == nil then
+        saiDB.keywordMatchMiddle = true
     end
-    if IOWDB.triggerOutgoingGInv == nil then
-        IOWDB.triggerOutgoingGInv = true
+    if saiDB.triggerOutgoingGInv == nil then
+        saiDB.triggerOutgoingGInv = true
     end
-    if IOWDB.triggerOutgoingInv == nil then
-        IOWDB.triggerOutgoingInv = false
+    if saiDB.triggerOutgoingInv == nil then
+        saiDB.triggerOutgoingInv = false
     end
     
-    StaticPopupDialogs["IOWguildinvPopup"] = {
+    StaticPopupDialogs["saiguildinvPopup"] = {
         text = "Do you want to invite %s to your guild?",
         button1 = "Yes",
         button2 = "No",
@@ -91,7 +91,7 @@ function IOW:ADDON_LOADED(addonName)
         preferredIndex = 3, 
     }
     
-    StaticPopupDialogs["IOWgroupinvPopup"] = {
+    StaticPopupDialogs["saigroupinvPopup"] = {
         text = "Do you want to invite %s to your party/raid?",
         button1 = "Yes",
         button2 = "No",
@@ -111,24 +111,24 @@ function IOW:ADDON_LOADED(addonName)
     self:UnregisterEvent("ADDON_LOADED")
 end
 
-function IOW:CHAT_MSG_BN_WHISPER(msg, _, _, _, _, _, _, _, _, _, _, _, bnetIDAccount, _)
+function sai:CHAT_MSG_BN_WHISPER(msg, _, _, _, _, _, _, _, _, _, _, _, bnetIDAccount, _)
     _M.handleBnetWhisper(msg, bnetIDAccount, false)
 end
 
-function IOW:CHAT_MSG_BN_WHISPER_INFORM(msg, _, _, _, _, _, _, _, _, _, _, _, bnetIDAccount, _)
+function sai:CHAT_MSG_BN_WHISPER_INFORM(msg, _, _, _, _, _, _, _, _, _, _, _, bnetIDAccount, _)
     _M.handleBnetWhisper(msg, bnetIDAccount, true)
 end
 
-function IOW:CHAT_MSG_WHISPER(msg, charname, _)
+function sai:CHAT_MSG_WHISPER(msg, charname, _)
     _M.handleWhisper(msg, charname, false)
 end
 
-function IOW:CHAT_MSG_WHISPER_INFORM(msg, charname, _)
+function sai:CHAT_MSG_WHISPER_INFORM(msg, charname, _)
     _M.handleWhisper(msg, charname, true)
 end
 
-function IOW:CHAT_MSG_GUILD(msg, charname, _)
-    -- print(IOWmsgPrefix .. "im monkey")
+function sai:CHAT_MSG_GUILD(msg, charname, _)
+    -- print(saimsgPrefix .. "im monkey")
     _M.handleGuildMsg(msg, charname, true)
     return
 end
@@ -142,7 +142,7 @@ _M.handleWhisper = function(msg, charname, outgoing)
 end
 
 _M.handleGuildMsg = function(msg, charname, outgoing)
-    -- print(IOWmsgPrefix .. "Guild message handled")
+    -- print(saimsgPrefix .. "Guild message handled")
     _M.process_msg(msg, charname, outgoing)
 end
 _M.handleBnetWhisper = function(msg, bnetIDAccount, outgoing)
@@ -154,48 +154,48 @@ _M.handleBnetWhisper = function(msg, bnetIDAccount, outgoing)
 end
 
 _M.process_msg = function(msg, charname, outgoing)
-    -- print(IOWmsgPrefix .. "message processed")
+    -- print(saimsgPrefix .. "message processed")
     msg = concatPrefix(msg)
 
 
     -- UNCOMMENT BELOW TO TEST FOR MATCHING
-    -- print(IOWDB.inv[msg])
+    -- print(saiDB.inv[msg])
 
     msg = msg:lower():trim()
 
-    if IOWDB.inv[msg] then
-        -- print(IOWmsgPrefix .. "Trying to invite" ..charname .."")
+    if saiDB.inv[msg] then
+        -- print(saimsgPrefix .. "Trying to invite" ..charname .."")
         InviteUnit(charname)
         return
     end
 
-    -- if IOWDB.ginv[msg] and (not outgoing or IOWDB.triggerOutgoingGInv) then
-    --     local dialog = StaticPopup_Show("IOWguildinvPopup", charname)
+    -- if saiDB.ginv[msg] and (not outgoing or saiDB.triggerOutgoingGInv) then
+    --     local dialog = StaticPopup_Show("saiguildinvPopup", charname)
     --     if (dialog) then
     --         dialog.data = charname
     --     end
     --     return
-    -- if IOWDB.inv[msg] and (not outgoing or IOWDB.triggerOutgoingInv) then
+    -- if saiDB.inv[msg] and (not outgoing or saiDB.triggerOutgoingInv) then
     --     print("inv matched and no outgoing")
-    --     if(IOWDB.confirm) then
-    --         local dialog = StaticPopup_Show("IOWgroupinvPopup", charname)
+    --     if(saiDB.confirm) then
+    --         local dialog = StaticPopup_Show("saigroupinvPopup", charname)
     --         if (dialog) then
     --             dialog.data = charname
     --         end
     --     else
-    --         print(IOWmsgPrefix .. "Trying to invite" ..charname .." to your party/raid")
-    --         print(IOWmsgPrefix .. "Type '/iow toggleconfirm' to ask for confirmation before inviting")
+    --         print(saimsgPrefix .. "Trying to invite" ..charname .." to your party/raid")
+    --         print(saimsgPrefix .. "Type '/sai toggleconfirm' to ask for confirmation before inviting")
     --         InviteUnit(charname)
     --     end
     --     return
     -- end
-    if IOWDB.keywordMatchMiddle then
+    if saiDB.keywordMatchMiddle then
         local found = false
         msg = ' ' .. msg .. ' '
         -- wrapping msg around spaces, so that it starts and ends with a non alphabetical letter
-        -- for phrase in pairs(IOWDB.ginv) do
+        -- for phrase in pairs(saiDB.ginv) do
         --     if (not outgoing) and msg:find('[^A-z]' .. phrase:lower():trim() .. '[^A-z]') then
-        --         local dialog = StaticPopup_Show("IOWguildinvPopup", charname)
+        --         local dialog = StaticPopup_Show("saiguildinvPopup", charname)
         --         if (dialog) then
         --             found = true
         --             dialog.data = charname
@@ -204,9 +204,9 @@ _M.process_msg = function(msg, charname, outgoing)
         --     end
         -- end
         -- if not found then
-        for phrase in pairs(IOWDB.inv) do
+        for phrase in pairs(saiDB.inv) do
             if (not outgoing) and msg:find('[^A-z]' .. phrase:lower():trim() .. '[^A-z]') then
-                local dialog = StaticPopup_Show("IOWgroupinvPopup", charname)
+                local dialog = StaticPopup_Show("saigroupinvPopup", charname)
                 if (dialog) then
                     found = true
                     dialog.data = charname
@@ -217,9 +217,9 @@ _M.process_msg = function(msg, charname, outgoing)
         end
         -- end
         if found then
-            print(IOWmsgPrefix .. "an invite keyword was found in the whisper you received. Type \"/iow toggleSmartMatch\" if you don't want long whispers to trigger an invite.")
-            if(not IOWDB.confirm) then
-                print(IOWmsgPrefix .. "The confirmation dialog cannot be disabled when Smart Match got triggered")
+            print(saimsgPrefix .. "an invite keyword was found in the whisper you received. Type \"/sai toggleSmartMatch\" if you don't want long whispers to trigger an invite.")
+            if(not saiDB.confirm) then
+                print(saimsgPrefix .. "The confirmation dialog cannot be disabled when Smart Match got triggered")
             end
         end
     end
@@ -229,8 +229,8 @@ _M.printInfo = function(subject)
     print(" ")
     print("|cffff0066Simply Auto Invite Instructions:|r")
     print("---------------------------------------------------------------------------")
-    print("Create inviting keyword: |cFF5EFF56/iow add inv {keyword}|r")
-    print("Delete inviting keyword: |cFFFF5956/iow remove inv {keyword}|r")
+    print("Create inviting keyword: |cFF5EFF56/sai add inv {keyword}|r")
+    print("Delete inviting keyword: |cFFFF5956/sai remove inv {keyword}|r")
     print("---------------------------------------------------------------------------")
     print("After creating a keyword, if anyone types that keyword in your guild chat, you will automatically send them a group invite.")
 end
@@ -247,32 +247,32 @@ _M.alterList = function(invtype, keyword, add)
     if (syntaxerror) then
         if (add) then
             print(" ")
-            print(IOWmsgPrefix .. "Incorrect usage. Correct usage is:")
-            print("/iow add inv [*new keyword*]")
+            print(saimsgPrefix .. "Incorrect usage. Correct usage is:")
+            print("/sai add inv [*new keyword*]")
             print("Example: to invite someone when they type 'invpls' in /guild,")
-            print("type '/iow add inv invpls'")
+            print("type '/sai add inv invpls'")
         else
             print(" ")
-            print(IOWmsgPrefix .. "Incorrect usage. Correct usage is:")
-            print("/iow remove inv [*keyword*]")
+            print(saimsgPrefix .. "Incorrect usage. Correct usage is:")
+            print("/sai remove inv [*keyword*]")
             print("Example: to remove the keyword 'invpls',")
-            print("type '/iow remove inv invpls'")
+            print("type '/sai remove inv invpls'")
         end
         return
     end
-    -- IOWDB[invtype][keyword] = val
-    IOWDB[invtype][keyword] = keyword
+    -- saiDB[invtype][keyword] = val
+    saiDB[invtype][keyword] = keyword
 
     if (add) then
-        print(IOWmsgPrefix .. "added '" .. keyword .. "' to the list: " .. invtype)
+        print(saimsgPrefix .. "added '" .. keyword .. "' to the list: " .. invtype)
     else
-        print(IOWmsgPrefix .. "removed '" .. keyword .. "' from the list: " .. invtype)
+        print(saimsgPrefix .. "removed '" .. keyword .. "' from the list: " .. invtype)
     end
 end
 
 
-SLASH_IOW1="/iow"
-SlashCmdList["IOW"] =
+SLASH_sai1="/sai"
+SlashCmdList["sai"] =
 	function(msg)
 		local a1, a2, a3 = strsplit(" ", strlower(msg), 3)
         if (a1 == "") then 
@@ -283,36 +283,5 @@ SlashCmdList["IOW"] =
             _M.alterList(a2, a3, true)
         elseif(a1 == "remove") then
             _M.alterList(a2, a3, false)
-        elseif(a1 == "toggleconfirm") then
-            IOWDB.confirm = (not IOWDB.confirm)
-            if(IOWDB.confirm) then
-                print(IOWmsgPrefix .. "confirmation for group invites is now turned ON")
-            else
-                print(IOWmsgPrefix .. "confirmation for group invites is now turned OFF")
-            end
-        elseif(a1 == "toggleoutgoingtrigger") then
-            if a2 == 'ginv' then
-                IOWDB.triggerOutgoingGInv = (not IOWDB.triggerOutgoingGInv)
-                if(IOWDB.triggerOutgoingGInv) then
-                    print(IOWmsgPrefix .. "triggering from outgoing whispers for guild invite is now turned ON")
-                else
-                    print(IOWmsgPrefix .. "triggering from outgoing whispers for guild invite is now turned OFF")
-                end
-            else
-                IOWDB.triggerOutgoingInv = (not IOWDB.triggerOutgoingInv)
-                if(IOWDB.triggerOutgoingInv) then
-                    print(IOWmsgPrefix .. "triggering from outgoing whispers for group invite is now turned ON")
-                else
-                    print(IOWmsgPrefix .. "triggering from outgoing whispers for group invite is now turned OFF")
-                end
-            end
-        elseif(a1 == "togglesmartmatch") then
-            IOWDB.keywordMatchMiddle = (not IOWDB.keywordMatchMiddle)
-            print(IOWmsgPrefix .. "smart match will search your received whispers for an invite keyword. the 'invite' keyword would then be triggered from \"Could you send me an invite please?\"")
-            if(IOWDB.keywordMatchMiddle) then
-                print(IOWmsgPrefix .. "smart match is now turned ON")
-            else
-                print(IOWmsgPrefix .. "smart match is now turned OFF")
-            end
         end
     end   
