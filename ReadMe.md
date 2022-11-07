@@ -19,7 +19,7 @@ To learn how to use this add-on, please keep reading, or type **/sai** in-game f
 &nbsp;
 <br/>
 
-<img align="left" width="250" src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/headshot.png?raw=true">
+<img align="left" width="275" src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/headshot.png?raw=true">
 
 <ins>Create invite keyword</ins>
 
