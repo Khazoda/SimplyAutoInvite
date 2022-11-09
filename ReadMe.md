@@ -1,11 +1,11 @@
-<h2 style="text-align: center;"><img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/logo_banner.png?raw=true" width="880" height="164" /> <br /> <span style="font-family: impact, sans-serif; font-size: 36px;">Simply Auto Invite</span></h2>
-<p style="text-align: center; display: flex; justify-content: center;"><img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/squirrel_banner.png?raw=true" width="880" /></p>
+<h2 style="text-align: center;"><img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/logo_banner.png?raw=true" width="880" height="164" alt='Simply Auto Invite logo'/> <br /> <span style="font-family: impact, sans-serif; font-size: 36px;">Simply Auto Invite</span></h2>
+<p style="text-align: center; display: flex; justify-content: center;"><img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/squirrel_banner.png?raw=true" width="880" alt='squirrel with speech bubble of addon summary'/></p>
 <p style="display: flex; justify-content: center; text-align: left;">&nbsp;</p>
-<h4>The squirrel text, but for screen readers ⇙</h4>
+<h4>The summary text, but for screen readers ⇙</h4>
 <p>Automatically invite your friends to your party through guild chat. This add-on is perfect for guilds that run raids of organise RP events, saving you time and hassle. To learn how to use this add-on, please keep reading, or type **/sai** in-game for a quick guide. &nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p><br /> <img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/instructions_banner.png?raw=true" width="880" align="left" /></p>
+<p><br /> <img src="https://github.com/Khazoda/SimplyAutoInvite/blob/master/Assets/instructions_banner.png?raw=true" width="880" align="left" alt='banner with the title: Usage Instructions'/></p>
 <p>&nbsp;</p>
 <p style="text-align: left;"><span style="font-size: 18px;"><ins>Create invite keyword</ins></span></p>
 <p style="text-align: left;"><span style="color: #008000; font-size: 18px;">/sai add [keyword]</span></p>
