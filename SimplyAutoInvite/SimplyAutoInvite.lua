@@ -5,9 +5,8 @@ saiDB = {
     triggerOutgoingGInv = true,
     triggerOutgoingInv = false
 }
-local nameAndVersion = "SimplyAutoInvite " ..
-                           GetAddOnMetadata("SimplyAutoInvite", "Version")
-local saimsgPrefix = "<SimplyAutoInvite> "
+local versionNumber = GetAddOnMetadata("SimplyAutoInvite", "Version")
+local saimsgPrefix = "|cFFFF6B68<|r|cFFFF4CA9SAI|r|cFFFF6B68>|r "
 
 local GuildInvite = GuildInvite
 local InviteUnit = C_PartyInfo.InviteUnit
@@ -33,7 +32,9 @@ sai:RegisterEvent("ADDON_LOADED")
 sai:RegisterEvent("CHAT_MSG_GUILD")
 
 function sai:ADDON_LOADED(addonName)
-    print("Loaded " .. nameAndVersion .. "; type '/sai info', for more info")
+    print("|cFFFF6B68<|r|cFFFF4CA9SimplyAutoInvite|r|cFFFF6B68>|r " ..
+              "Addon Version " .. versionNumber ..
+              " loaded. Type |cFF5EFF56'/sai help'|r for a list of commands.")
 
     if saiDB.inv == nil then saiDB.inv = {inv = true, invite = true} end
     if saiDB.confirm == nil then saiDB.confirm = true end
@@ -93,15 +94,27 @@ _M.process_msg = function(msg, charname, outgoing)
 end
 
 _M.printInfo = function(subject)
-    print(" ")
-    print("|cffff0066Simply Auto Invite Instructions:|r")
-    print("----------------------------------------------------------------")
-    print("Create inviting keyword: |cFF5EFF56/sai add [keyword]|r")
-    print("Delete inviting keyword: |cFFFF5956/sai remove [keyword]|r")
-    print("----------------------------------------------------------------")
-    print("If anyone types your keyword in the guild chat,")
-    print("your client will automatically invite them to your group.")
-
+    if (subject == "") then
+        print(
+            "|cFFFF6B68<|r|cFFFF4CA9SimplyAutoInvite|r|cFFFF6B68>|r  Instructions:|r")
+        print(
+            "|cFFFF6B68›|r ------------------------------------------------------------------")
+        print(
+            "|cFFFF6B68›|r Create inviting keyword: |cFF5EFF56/sai add [keyword]|r")
+        print(
+            "|cFFFF6B68›|r Delete inviting keyword: |cFFFF5956/sai remove [keyword]|r")
+        print("|cFFFF6B68›|r ")
+        print("|cFFFF6B68›|r If anyone types your keyword in the guild chat,")
+        print(
+            "|cFFFF6B68›|r your client will automatically invite them to your group.")
+        print(
+            "|cFFFF6B68›|r ------------------------------------------------------------------")
+    else
+        print(saimsgPrefix .. "|cFFFF4343/sai " .. subject ..
+                  " is not a valid command.|r")
+        print(
+            "|cFFFF6B68›|r |cFFFFCF56Please try '/sai help' for a list of commands.|r")
+    end
 end
 
 -- Inviting function
@@ -110,13 +123,13 @@ _M.alterList = function(keyword, add)
     if (keyword == nil) then error = true end
     if (error) then
         if (add) then
-            print(" ")
-            print(saimsgPrefix .. "Incorrect usage. Try:")
-            print("|cFF5EFF56/sai add [*new keyword*]|r")
+            print(saimsgPrefix .. "|cFFFF4343Incorrect usage. Try:|r")
+            print(
+                "|cFFFF6B68›|r |cFFFFCF56'/sai add [new keyword]' (no brackets)|r")
         else
-            print(" ")
-            print(saimsgPrefix .. "Incorrect usage. Try:")
-            print("|cFFFF5956/sai remove [*keyword*]|r")
+            print(saimsgPrefix .. "|cFFFF4343Incorrect usage. Try:|r")
+            print(
+                "|cFFFF6B68›|r |cFFFFCF56'/sai remove [keyword]' (no brackets)|r")
         end
         return
 
@@ -138,12 +151,14 @@ SLASH_sai1 = "/sai"
 SlashCmdList["sai"] = function(msg)
     local a1, a2 = strsplit(" ", strlower(msg), 2)
     if (a1 == "") then
-        _M.printInfo()
-    elseif (a1 == "info") then
-        _M.printInfo(a2)
+        _M.printInfo("")
+    elseif (a1 == "help") then
+        _M.printInfo("")
     elseif (a1 == "add") then
         _M.alterList(a2, true)
     elseif (a1 == "remove") then
         _M.alterList(a2, false)
+    else
+        _M.printInfo(a1)
     end
 end
