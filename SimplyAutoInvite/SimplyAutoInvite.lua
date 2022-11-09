@@ -5,6 +5,7 @@ saiDB = {
     triggerOutgoingGInv = true,
     triggerOutgoingInv = false
 }
+keywordDB = {}
 local versionNumber = GetAddOnMetadata("SimplyAutoInvite", "Version")
 local saimsgPrefix = "|cFFFF6B68<|r|cFFFF4CA9SAI|r|cFFFF6B68>|r "
 
@@ -134,7 +135,7 @@ _M.alterList = function(keyword, add)
         return
 
     else
-        saiDB['inv'][keyword] = keyword
+        table.insert(keywordDB, keyword)
         if (add) then
             print(saimsgPrefix .. "|cFF5EFF56Added|r |cFFFFCF56'" .. keyword ..
                       "' |r|cFF5EFF56to your keywords|r")
@@ -145,6 +146,19 @@ _M.alterList = function(keyword, add)
         end
     end
 
+end
+
+_M.listList = function()
+    print("List of active keywords:")
+    -- print(saiDB['inv'])
+
+    local people = {
+        {name = "Fred", address = "16 Long Street", phone = "123456"},
+        {name = "Wilma", address = "16 Long Street", phone = "123456"},
+        {name = "Barney", address = "17 Long Street", phone = "123457"}
+    }
+
+    for index, data in ipairs(keywordDB) do print(index, data) end
 end
 
 SLASH_sai1 = "/sai"
@@ -158,6 +172,8 @@ SlashCmdList["sai"] = function(msg)
         _M.alterList(a2, true)
     elseif (a1 == "remove") then
         _M.alterList(a2, false)
+    elseif (a1 == "list") then
+        _M.listList()
     else
         _M.printInfo(a1)
     end

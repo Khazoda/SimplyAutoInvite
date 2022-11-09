@@ -3,7 +3,7 @@
 ## Notes: Automatically invite people to your group from guild chat with a given keyword
 ## Author: Khazoda
 ## Version: 1.4
-## SavedVariables:IOWDB
+## SavedVariables:keywordDB
 ## X-License: GNU General Public License version 3 (GPLv3)
 
 ## LoadManagers: AddonLoader
