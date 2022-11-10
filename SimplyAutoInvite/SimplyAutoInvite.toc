@@ -2,8 +2,8 @@
 ## Title:|cffff0066SimplyAutoInvite|r
 ## Notes: Automatically invite people to your group from guild chat with a given keyword
 ## Author: Khazoda
-## Version: 1.4
-## SavedVariables:keywordDB
+## Version: 2.0
+## SavedVariables:KeywordDB
 ## X-License: GNU General Public License version 3 (GPLv3)
 
 ## LoadManagers: AddonLoader

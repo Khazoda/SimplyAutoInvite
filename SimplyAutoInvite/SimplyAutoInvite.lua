@@ -1,26 +1,18 @@
-saiDB = {
-    inv = {inv = true, invite = true},
-    confirm = true,
-    keywordMatchMiddle = true,
-    triggerOutgoingGInv = true,
-    triggerOutgoingInv = false
-}
-keywordDB = {}
+KeywordDB = {}
 local versionNumber = GetAddOnMetadata("SimplyAutoInvite", "Version")
+
+local saimsgPrefixLong =
+    "|cFFFF6B68<|r|cFFD47FAAS|r|cFFE28EA5i|r|cFFF9B280m|r|cFFFBCE80p|r|cFFFBE397l|r|cFFAFC58Cy|r|cFFFBE397A|r|cFFFBCE80u|r|cFFF9B280t|r|cFFE28EA5o|r|cFFD47FAAI|r|cFFE28EA5n|r|cFFF9B280v|r|cFFFBCE80i|r|cFFFBE397t|r|cFFAFC58Ce|r|r|cFFFF6B68>|r "
 local saimsgPrefix = "|cFFFF6B68<|r|cFFFF4CA9SAI|r|cFFFF6B68>|r "
 local saimsgCurio = "|cFFFF6B68›|r "
 
 local clearAwaitingConfirmation = false
-local GuildInvite = GuildInvite
 local InviteUnit = C_PartyInfo.InviteUnit
-local print = print
-local GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
-local lower = lower
-local trim = trim
 local strlower = strlower
-local tinsert = tinsert
-local _M = {}
-saiFunctions = _M
+local print = print
+
+local _SAI = {}
+saiFunctions = _SAI
 
 local sai = CreateFrame("Frame", "SimplyAutoInvite")
 
@@ -35,88 +27,53 @@ sai:RegisterEvent("ADDON_LOADED")
 sai:RegisterEvent("CHAT_MSG_GUILD")
 
 function sai:ADDON_LOADED(addonName)
-    print("|cFFFF6B68<|r|cFFFF4CA9SimplyAutoInvite|r|cFFFF6B68>|r " ..
-              "Addon Version " .. versionNumber ..
+    print(saimsgPrefixLong .. "Addon Version " .. versionNumber ..
               " loaded. Type |cFF5EFF56'/sai help'|r for a list of commands.")
-
-    if saiDB.inv == nil then saiDB.inv = {inv = true, invite = true} end
-    if saiDB.confirm == nil then saiDB.confirm = true end
-    if saiDB.keywordMatchMiddle == nil then saiDB.keywordMatchMiddle = true end
-    if saiDB.triggerOutgoingGInv == nil then saiDB.triggerOutgoingGInv = true end
-    if saiDB.triggerOutgoingInv == nil then saiDB.triggerOutgoingInv = false end
 
     self:UnregisterEvent("ADDON_LOADED")
 end
 
 function sai:CHAT_MSG_GUILD(msg, charname, _)
-    _M.handleGuildMsg(msg, charname, true)
+    _SAI.process_msg(msg, charname, true)
     return
 end
 
 -- Helper functions
-function concatPrefix(s) return (s:gsub("%b[] ", "")) end
+function ConcatPrefix(s) return (s:gsub("%b[] ", "")) end
 
 local function has_value(tab, val)
     for index, value in ipairs(tab) do if value == val then return true end end
 
     return false
 end
-_M.handleGuildMsg = function(msg, charname, outgoing)
-    _M.process_msg(msg, charname, outgoing)
-end
 
-_M.process_msg = function(msg, charname, outgoing)
-    msg = concatPrefix(msg)
+_SAI.process_msg = function(msg, charname, outgoing)
+    msg = ConcatPrefix(msg)
     msg = msg:lower():trim()
 
-    if saiDB.inv[msg] then
+    if (has_value(KeywordDB, msg)) then
         InviteUnit(charname)
         return
     end
 
-    if saiDB.keywordMatchMiddle then
-        local found = false
-        msg = ' ' .. msg .. ' '
-
-        for phrase in pairs(saiDB.inv) do
-            if (not outgoing) and
-                msg:find('[^A-z]' .. phrase:lower():trim() .. '[^A-z]') then
-                local dialog = StaticPopup_Show("saigroupinvPopup", charname)
-                if (dialog) then
-                    found = true
-                    dialog.data = charname
-
-                end
-                break
-            end
-        end
-        -- end
-        if found then
-            print(saimsgPrefix ..
-                      "an invite keyword was found in the whisper you received. Type \"/sai toggleSmartMatch\" if you don't want long whispers to trigger an invite.")
-            if (not saiDB.confirm) then
-                print(saimsgPrefix ..
-                          "The confirmation dialog cannot be disabled when Smart Match got triggered")
-            end
-        end
-    end
 end
 
-_M.printInfo = function(subject)
+_SAI.printInfo = function(subject)
     if (subject == "") then
         print(
             "|cFFFF6B68<|r|cFFFF4CA9SimplyAutoInvite|r|cFFFF6B68>|r  Instructions:|r")
         print(saimsgCurio ..
                   "------------------------------------------------------------------")
+        print(saimsgCurio .. "Create keyword: |cFF5EFF56/sai add [keyword]|r")
         print(saimsgCurio ..
-                  "Create inviting keyword: |cFF5EFF56/sai add [keyword]|r")
-        print(saimsgCurio ..
-                  "Delete inviting keyword: |cFFFF5956/sai remove [keyword index]|r")
+                  "Delete keyword: |cFFFF5956/sai remove [keyword index]|r")
         print(saimsgCurio)
         print(saimsgCurio .. "If anyone types your keyword in the guild chat,")
         print(saimsgCurio ..
                   "your client will automatically invite them to your group.")
         print(saimsgCurio .. "")
+        print(saimsgCurio ..
+                  "To delete all your active keywords, type |cFF00CAFF/sai clear|r")
         print(saimsgCurio ..
                   "To see your active keywords, type |cFFFFCF56/sai list|r")
         print(saimsgCurio ..
@@ -130,7 +87,7 @@ _M.printInfo = function(subject)
 end
 
 -- Inviting function
-_M.alterList = function(keyword, add)
+_SAI.alterList = function(keyword, add)
     local error = false
     if (keyword == nil) then error = true end
     if (error) then
@@ -148,11 +105,11 @@ _M.alterList = function(keyword, add)
 
     else
         if (add) then
-            if (has_value(keywordDB, keyword)) then
+            if (has_value(KeywordDB, keyword)) then
                 print(saimsgPrefix .. "|cFFFF4343Keyword '" .. keyword ..
                           "' is already active.|r")
             else
-                table.insert(keywordDB, keyword)
+                table.insert(KeywordDB, keyword)
                 print(
                     saimsgPrefix .. "|cFF5EFF56Added|r |cFFFFCF56'" .. keyword ..
                         "' |r|cFF5EFF56to your keywords|r")
@@ -160,10 +117,10 @@ _M.alterList = function(keyword, add)
         else
             -- Removes keyword at given numerical index
             local index = tonumber(keyword)
-            if (type(index) == "number" and index <= #keywordDB) then
-                local removed_keyword = keywordDB[index]
+            if (type(index) == "number" and index <= #KeywordDB) then
+                local removed_keyword = KeywordDB[index]
 
-                table.remove(keywordDB, index)
+                table.remove(KeywordDB, index)
                 print(saimsgPrefix .. "|cFFFF5956Removed|r |cFFFFCF56'" ..
                           removed_keyword ..
                           "' |r|cFFFF5956from your keywords|r")
@@ -177,24 +134,24 @@ _M.alterList = function(keyword, add)
 
 end
 
-_M.clearList = function()
+_SAI.clearList = function()
     print(saimsgPrefix ..
               "|cFFFF5956WARNING:|r Are you sure you want to clear your list of keywords?")
     print(saimsgCurio .. "If you are, please type  |cFFFFCF56/sai confirm|r")
     clearAwaitingConfirmation = true
 end
 
-_M.confirmClear = function()
+_SAI.confirmClear = function()
     if (clearAwaitingConfirmation) then
-        keywordDB = {}
+        KeywordDB = {}
         print(saimsgPrefix .. "|cFF009DFFYour keywords have been cleared.")
     end
 end
 
-_M.listList = function()
+_SAI.listList = function()
     print(saimsgPrefix .. "List of active keywords:")
     print(saimsgCurio .. "-----------------------------------")
-    for index, data in ipairs(keywordDB) do
+    for index, data in ipairs(KeywordDB) do
         if (index % 2 == 0) then
             print(saimsgCurio .. "|cFFFF8BD2" .. index .. " - " .. data .. "|r")
         else
@@ -203,27 +160,41 @@ _M.listList = function()
     end
 end
 
+_SAI.june = function()
+    for i = 1, 10, 1 do
+        print(saimsgPrefixLong .. saimsgPrefixLong .. saimsgPrefixLong ..
+                  saimsgPrefixLong)
+    end
+    print("Take care of yourself and stay healthy <3")
+    for i = 1, 10, 1 do
+        print(saimsgPrefixLong .. saimsgPrefixLong .. saimsgPrefixLong ..
+                  saimsgPrefixLong)
+    end
+end
+
 SLASH_sai1 = "/sai"
 SlashCmdList["sai"] = function(msg)
     local a1, a2 = strsplit(" ", strlower(msg), 2)
     if (a1 == "confirm") then
-        _M.confirmClear()
+        _SAI.confirmClear()
     else
         clearAwaitingConfirmation = false
         if (a1 == "") then
-            _M.printInfo("")
+            _SAI.printInfo("")
         elseif (a1 == "help") then
-            _M.printInfo("")
+            _SAI.printInfo("")
         elseif (a1 == "add") then
-            _M.alterList(a2, true)
+            _SAI.alterList(a2, true)
         elseif (a1 == "remove") then
-            _M.alterList(a2, false)
+            _SAI.alterList(a2, false)
         elseif (a1 == "clear") then
-            _M.clearList()
+            _SAI.clearList()
         elseif (a1 == "list") then
-            _M.listList()
+            _SAI.listList()
+        elseif (a1 == "june") then
+            _SAI.june()
         else
-            _M.printInfo(a1)
+            _SAI.printInfo(a1)
         end
     end
 end
