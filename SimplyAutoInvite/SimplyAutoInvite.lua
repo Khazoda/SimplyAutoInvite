@@ -39,7 +39,16 @@ function sai:CHAT_MSG_GUILD(msg, charname, _)
 end
 
 -- Helper functions
-function ConcatPrefix(s) return (s:gsub("%b[] ", "")) end
+function ConcatPrefix(s)
+    -- Replace square brackets with an empty string
+    local string = s:gsub("%b[] ", "")
+    -- Replace parentheses with an empty string
+    string = string:gsub("%b() ", "")
+    -- Replace curly braces with an empty string
+    string = string:gsub("%b{} ", "")
+
+    return string
+end
 
 local function has_value(tab, val)
     for index, value in ipairs(tab) do if value == val then return true end end
